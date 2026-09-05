@@ -94,6 +94,8 @@
 <div class="cim-card">
     <div class="cim-card-encabezado">
         <h2>Contactos</h2>
+        <a class="cim-btn" asp-controller="Contactos" asp-action="Create"
+           asp-route-empresaId="@Model.EmpresaId">Nuevo contacto</a>
     </div>
 
     @if (!Model.Contactos.Any())
@@ -110,16 +112,26 @@
                         <th>Puesto</th>
                         <th>Teléfono</th>
                         <th>Email</th>
+                        <th class="acciones">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach (var contacto in Model.Contactos.OrderBy(c => c.Nombre))
                 {
                     <tr>
-                        <td class="principal">@($"{contacto.Nombre} {contacto.Apellidos}".Trim())</td>
+                        <td>
+                            <a class="principal" asp-controller="Contactos" asp-action="Details"
+                               asp-route-id="@contacto.ContactoId">
+                                @($"{contacto.Nombre} {contacto.Apellidos}".Trim())
+                            </a>
+                        </td>
                         <td>@(string.IsNullOrWhiteSpace(contacto.Puesto) ? "—" : contacto.Puesto)</td>
                         <td>@(string.IsNullOrWhiteSpace(contacto.Telefono) ? "—" : contacto.Telefono)</td>
                         <td>@(string.IsNullOrWhiteSpace(contacto.Email) ? "—" : contacto.Email)</td>
+                        <td class="acciones">
+                            <a class="btn-mini" asp-controller="Contactos" asp-action="Edit"
+                               asp-route-id="@contacto.ContactoId">Editar</a>
+                        </td>
                     </tr>
                 }
                 </tbody>
